@@ -1,21 +1,18 @@
 import { Router } from 'express';
 
-import { listOrdersController } from './app/controllers/orders/listOrdersController';
-
-import { createOrderController } from './app/controllers/orders/createOrderController';
-
-import { changeOrderStatusController } from './app/controllers/orders/changeOrderStatusController';
-
-import { cancelOrderController } from './app/controllers/orders/cancelOrderController';
+import { listOrders } from '../app/useCases/orders/listOrders';
+import { createOrder } from '../app/useCases/orders/createOrder';
+import { changeOrderStatus } from '../app/useCases/orders/changeOrderStatus';
+import { cancelOrder } from '../app/useCases/orders/cancelOrder';
 
 const route = Router();
 
-route.get('/', listOrdersController);
+route.get('/', listOrders);
 
-route.post('/', createOrderController);
+route.post('/', createOrder);
 
-route.patch('/:id', changeOrderStatusController);
+route.patch('/:id', changeOrderStatus);
 
-route.delete('/:id', cancelOrderController);
+route.delete('/:id', cancelOrder);
 
 export { route as ordersRoutes };

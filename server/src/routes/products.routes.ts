@@ -1,13 +1,12 @@
 import { Router } from 'express';
 
-import { listProductsController } from './app/controllers/categories/listProductsController';
-
-import { createProductController } from './app/controllers/categories/createProductController';
+import { listProducts } from '../app/useCases/products/listProducts';
+import { createProduct } from '../app/useCases/products/createProduct';
 
 const route = Router();
 
-route.get('/', listProductsController);
+route.get('/', listProducts);
 
-route.post('/', createProductController);
+route.post('/', createProduct);
 
 export { route as productsRoutes };

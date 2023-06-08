@@ -1,17 +1,15 @@
 import { Router } from 'express';
 
-import { listCategoriesController } from './app/controllers/categories/listCategoriesController';
-
-import { listProductsByCategoryController } from './app/controllers/categories/listProductsByCategoryController';
-
-import { createCategoryController } from './app/controllers/categories/createCategoryController';
+import { listCategories } from '../app/useCases/categories/listCategories';
+import { listProductsByCategory } from '../app/useCases/categories/listProductsByCategory';
+import { createCategory } from '../app/useCases/categories/createCategory';
 
 const route = Router();
 
-route.get('/', listCategoriesController);
+route.get('/', listCategories);
 
-route.get('/:id/products', listProductsByCategoryController);
+route.get('/:id/products', listProductsByCategory);
 
-route.post('/', createCategoryController);
+route.post('/', createCategory);
 
 export { route as categoriesRoutes };
