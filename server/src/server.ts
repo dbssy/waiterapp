@@ -10,7 +10,7 @@ import { routes } from './routes';
 const server = express();
 
 server.use(express.json());
-server.use('/uploads', express.static(path.resolve(__dirname, '..', '/uploads')));
+server.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 server.use(routes);
 server.use(errorHandler);
 
