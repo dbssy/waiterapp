@@ -1,4 +1,8 @@
 import { useFonts } from 'expo-font';
+import { StatusBar } from 'expo-status-bar';
+
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
 
 import { Main } from './src/Main';
 
@@ -14,6 +18,9 @@ export default function App() {
   }
 
   return (
-    <Main />
+    <>
+      <StatusBar style="dark" />
+      <Main />
+    </>
   );
 }
