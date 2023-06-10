@@ -9,6 +9,12 @@ export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
+export const CenteredContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const CategoriesContainer = styled.View`
   height: 73px;
   margin-top: 32px;

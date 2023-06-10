@@ -9,8 +9,6 @@ import {
   Separator
 } from './styles';
 
-import { products } from '../../mocks/products';
-
 import { Product } from '../../types/Product';
 
 import { formatCurrency } from '../../utils/formatCurrency';
@@ -20,10 +18,11 @@ import { Text } from '../Text';
 import { PlusCircle } from '../Icons/PlusCircle';
 
 interface MenuProps {
+  products: Product[];
   onAddToCart: (product: Product) => void;
 }
 
-export function Menu({ onAddToCart }: MenuProps) {
+export function Menu({ products, onAddToCart }: MenuProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
 
