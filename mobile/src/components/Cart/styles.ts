@@ -11,6 +11,7 @@ export const Item = styled.View`
 
 export const ProductContainer = styled.View`
   flex-direction: row;
+  flex: 1;
 `;
 
 export const Image = styled.Image`

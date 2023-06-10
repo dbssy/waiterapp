@@ -12,6 +12,8 @@ import {
   TotalContainer
 } from './styles';
 
+import { api } from '../../lib/api';
+
 import { CartItem } from '../../types/CartItem';
 import { Product } from '../../types/Product';
 
@@ -24,6 +26,7 @@ import { MinusCircle } from '../Icons/MinusCircle';
 import { PlusCircle } from '../Icons/PlusCircle';
 
 interface CartProps {
+  selectedTable: string;
   cartItems: CartItem[];
   onAdd: (product: Product) => void;
   onDecrement: (product: Product) => void;
@@ -31,19 +34,31 @@ interface CartProps {
 }
 
 export function Cart({
+  selectedTable,
   cartItems,
   onAdd,
   onDecrement,
   onConfirmOrder,
 }: CartProps) {
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const total = cartItems.reduce((total, cartItem) => {
     return total + cartItem.quantity * cartItem.product.price;
   }, 0);
 
-  function handleConfirmOrder() {
+  async function handleConfirmOrder() {
+    setIsLoading(true);
+
+    await api.post('/orders', {
+      table: selectedTable,
+      products: cartItems.map((cartIem) => ({
+        product: cartIem.product._id,
+        quantity: cartIem.quantity,
+      })),
+    });
+
+    setIsLoading(false);
     setIsModalVisible(true);
   }
 
@@ -79,7 +94,7 @@ export function Cart({
                 </QuantityContainer>
 
                 <ProductDetails>
-                  <Text size={14} weight="600">{cartItem.product.name}</Text>
+                  <Text size={14} weight="600" style={{ maxWidth: 150 }}>{cartItem.product.name}</Text>
                   <Text size={14} color="#666" style={{ marginTop: 4 }}>
                     {formatCurrency(cartItem.product.price)}
                   </Text>
