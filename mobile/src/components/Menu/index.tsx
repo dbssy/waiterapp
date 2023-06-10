@@ -9,17 +9,21 @@ import {
   Separator
 } from './styles';
 
-import { ProductModal } from '../ProductModal';
-import { Text } from '../Text';
-import { PlusCircle } from '../Icons/PlusCircle';
+import { products } from '../../mocks/products';
 
 import { Product } from '../../types/Product';
 
 import { formatCurrency } from '../../utils/formatCurrency';
 
-import { products } from '../../mocks/products';
+import { ProductModal } from '../ProductModal';
+import { Text } from '../Text';
+import { PlusCircle } from '../Icons/PlusCircle';
 
-export function Menu() {
+interface MenuProps {
+  onAddToCart: (product: Product) => void;
+}
+
+export function Menu({ onAddToCart }: MenuProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
 
@@ -34,6 +38,7 @@ export function Menu() {
         visible={isModalVisible}
         product={selectedProduct}
         onClose={() => setIsModalVisible(false)}
+        onAddToCart={onAddToCart}
       />
 
       <FlatList
@@ -64,7 +69,7 @@ export function Menu() {
               <Text size={14} weight="600">{formatCurrency(product.price)}</Text>
             </ProductDetails>
 
-            <AddToCartButton>
+            <AddToCartButton onPress={() => onAddToCart(product)}>
               <PlusCircle />
             </AddToCartButton>
           </ProductContainer>
