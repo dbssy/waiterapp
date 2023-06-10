@@ -6,7 +6,6 @@ import {
   CenteredContainer,
   Container,
   Footer,
-  FooterContainer,
   MenuContainer
 } from './styles';
 
@@ -169,7 +168,7 @@ export function Main() {
       </Container>
 
       <Footer>
-        <FooterContainer>
+        <>
           {!selectedTable && (
             <Button
               disabled={isLoading}
@@ -188,7 +187,7 @@ export function Main() {
               onConfirmOrder={handleResetOrder}
             />
           )}
-        </FooterContainer>
+        </>
       </Footer>
 
       <TableModal

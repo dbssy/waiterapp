@@ -121,7 +121,7 @@ export function Cart({
       )}
 
       <Summary>
-        <TotalContainer>
+        <TotalContainer style={{ marginBottom: 20 }}>
           {cartItems.length > 0 ? (
             <>
               <Text color="#666">Total</Text>
