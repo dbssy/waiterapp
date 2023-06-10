@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { Board, OrdersContainer } from './styles';
+
+import { api } from '@/lib/api';
 
 import { Order } from '@/types/Order';
 
@@ -10,9 +14,18 @@ interface OrdersBoardProps {
   icon: string;
   title: string;
   orders: Order[];
+  onChangeOrderStatus: (orderId: string, status: Order['status']) => void;
+  onCancelOrder: (orderId: string) => void;
 }
 
-export function OrdersBoard({ icon, title, orders }: OrdersBoardProps) {
+export function OrdersBoard({
+  icon,
+  title,
+  orders,
+  onChangeOrderStatus,
+  onCancelOrder
+}: OrdersBoardProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<null | Order>(null);
 
@@ -26,12 +39,44 @@ export function OrdersBoard({ icon, title, orders }: OrdersBoardProps) {
     setSelectedOrder(null);
   }
 
+  async function handleChangeOrderStatus() {
+    setIsLoading(true);
+
+    const status = selectedOrder?.status === 'WAITING'
+      ? 'IN_PRODUCTION'
+      : 'DONE'
+      ;
+
+    await api.patch(`/orders/${selectedOrder?._id}`, { status });
+
+    toast.success(`O pedido da mesa ${selectedOrder?.table} teve o status alterado!`);
+
+    onChangeOrderStatus(selectedOrder!._id, selectedOrder!.status);
+    setIsLoading(false);
+    setIsModalVisible(false);
+  }
+
+  async function handleCancelOrder() {
+    setIsLoading(true);
+
+    await api.delete(`/orders/${selectedOrder?._id}`);
+
+    toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado!`);
+
+    onCancelOrder(selectedOrder!._id);
+    setIsLoading(false);
+    setIsModalVisible(false);
+  }
+
   return (
     <Board>
       <OrderModal
         visible={isModalVisible}
+        isLoading={isLoading}
         order={selectedOrder}
         onClose={handleCloseModal}
+        onChangeOrderStatus={handleChangeOrderStatus}
+        onCancelOrder={handleCancelOrder}
       />
 
       <header>

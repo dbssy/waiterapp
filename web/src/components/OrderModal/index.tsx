@@ -10,11 +10,21 @@ import { formatCurrency } from '@/utils/formatCurrency';
 
 interface OrderModal {
   visible: boolean;
+  isLoading: boolean;
   order: Order | null;
   onClose: () => void;
+  onChangeOrderStatus: () => void;
+  onCancelOrder: () => Promise<void>;
 }
 
-export function OrderModal({ visible, order, onClose }: OrderModal) {
+export function OrderModal({
+  visible,
+  isLoading,
+  order,
+  onClose,
+  onChangeOrderStatus,
+  onCancelOrder
+}: OrderModal) {
   if (!visible || !order) {
     return null;
   }
@@ -96,12 +106,31 @@ export function OrderModal({ visible, order, onClose }: OrderModal) {
         </OrderDetails>
 
         <Actions>
-          <button type="button" className="primary">
-            <span>👨‍🍳</span>
-            <span>Iniciar Produção</span>
-          </button>
+          {order.status !== 'DONE' && (
+            <button
+              type="button"
+              className="primary"
+              disabled={isLoading}
+              onClick={onChangeOrderStatus}
+            >
+              <span>
+                {order.status === 'WAITING' && '👨‍🍳'}
+                {order.status === 'IN_PRODUCTION' && '✅'}
+              </span>
 
-          <button type="button" className="secondary">
+              <span>
+                {order.status === 'WAITING' && 'Iniciar Produção'}
+                {order.status === 'IN_PRODUCTION' && 'Concluir Pedido'}
+              </span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            className="secondary"
+            disabled={isLoading}
+            onClick={onCancelOrder}
+          >
             Cancelar Pedido
           </button>
         </Actions>
