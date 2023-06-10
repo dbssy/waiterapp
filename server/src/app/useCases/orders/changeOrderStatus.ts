@@ -11,7 +11,7 @@ export async function changeOrderStatus(req: Request, res: Response) {
     return res.status(400).json({ error: 'O status deve ser um desses: WAITING, IN_PRODUCTION, DONE' });
   }
 
-  await Order.findByIdAndUpdate(id, { status });
+  await Order.findByIdAndUpdate(id, { status }, { new: true });
 
   return res.sendStatus(204);
 }
