@@ -16,7 +16,7 @@
     "intl": "^1.2.5",
     "react": "18.2.0",
     "react-native": "0.71.8",
-    "react-native-svg": "13.4.0",
+    "react-native-svg": "13.9.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
