@@ -14,14 +14,14 @@
     "expo-font": "~11.1.1",
     "expo-status-bar": "~1.4.4",
     "intl": "^1.2.5",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-native": "0.71.10",
     "react-native-svg": "13.9.0",
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
-    "@types/react": "~18.2.11",
+    "@types/react": "~18.3.0",
     "@types/styled-components": "^5.1.26",
     "@types/styled-components-react-native": "^5.2.1",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
